@@ -19,7 +19,8 @@ passport.deserializeUser((id, done) => {
 passport.use(new GoogleAuthStrategy({
   clientID: appKeys.googleClientID,
   clientSecret: appKeys.googleClientSecret,
-  callbackURL: '/auth/google/callback'
+  callbackURL: '/auth/google/callback',
+  proxy: true
 }, (accessToken, refreshToken, profile, done) => {
   // after receiving profile info from Google - create new user or return existing one
   User.findOne({ googleID: profile.id }).then((existingUser) => {
