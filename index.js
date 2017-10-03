@@ -30,4 +30,15 @@ require('./services/passport');
 // Add application auth routes
 require('./routes/authRoutes')(app);
 
+// Add production routing
+if (process.env.NODE_ENV === 'production') {
+  // serve up production assets
+  app.use(express.static('client/build'));
+  // serve up the index.html file when route is unrecognized
+  const path = require('path');
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
 app.listen(PORT, () => console.log(`☰☰☰ ➔ Express running on port ${PORT} ✔ ☰☰☰`));
