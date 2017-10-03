@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
+const bodyParser = require('body-parser');
 
 const appKeys = require('./config/keys');
 const PORT = process.env.PORT || 5000;
@@ -9,6 +10,8 @@ const app = express();
 
 // Use native promises
 mongoose.Promise = global.Promise;
+
+app.use(bodyParser.json());
 
 app.use(cookieSession({
   maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
@@ -29,6 +32,9 @@ require('./services/passport');
 
 // Add application auth routes
 require('./routes/authRoutes')(app);
+
+// Add application billing routes
+require('./routes/billingRoutes')(app);
 
 // Add production routing
 if (process.env.NODE_ENV === 'production') {
