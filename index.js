@@ -7,6 +7,9 @@ const appKeys = require('./config/keys');
 const PORT = process.env.PORT || 5000;
 const app = express();
 
+// Use native promises
+mongoose.Promise = global.Promise;
+
 app.use(cookieSession({
   maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
   keys: [appKeys.cookieKey] // keys for cookie encryption
