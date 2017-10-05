@@ -23,6 +23,7 @@ app.use(passport.session());
 
 // Load mongoose models
 require('./models/user');
+require('./models/survey');
 
 // Connect to DB
 mongoose.connect(appKeys.mongoURI);
@@ -32,9 +33,10 @@ require('./services/passport');
 
 // Add application auth routes
 require('./routes/authRoutes')(app);
-
 // Add application billing routes
 require('./routes/billingRoutes')(app);
+// Add application survey routes
+require('./routes/surveyRoutes')(app);
 
 // Add production routing
 if (process.env.NODE_ENV === 'production') {
