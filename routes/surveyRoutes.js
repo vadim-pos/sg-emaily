@@ -15,6 +15,13 @@ module.exports = app => {
     res.send('Thans for voting');
   });
 
+  app.get('/api/surveys', requireLogin, async (req ,res) => {
+    const surveys = await Survey.find({ _user: req.user.id })
+      // do not include recipients list in response from database
+      .select({ recipients: false });
+    res.send(surveys);
+  });
+
   app.post('/api/surveys/webhooks', (req, res) => {
     const path = new Path('/api/surveys/:surveyId/:choice');
     
